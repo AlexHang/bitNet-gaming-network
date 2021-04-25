@@ -1,0 +1,23 @@
+html, body, #main-container, .full-height{
+    height: 100%;
+}
+
+
+#background-container{
+    background-image: url("img/background.jpg");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#logo-img{
+    width: 80%;
+}
+.form-group{
+    padding-top: 10px;
+}

@@ -44,7 +44,7 @@ public class UserService {
         loginResponse response;
 
         User aux = userRepo.findUserByEmailAndPassword(u.getEmail(), getHash(u.getPassword()));
-        if(aux.getId()!=null){
+        if(aux!=null){
             response = new loginResponse(aux.getId(),true);
         }else{
             response =  new loginResponse(-1,false);

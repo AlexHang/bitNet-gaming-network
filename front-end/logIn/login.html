@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Welcome to BitNet</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+  
+<div class="container-fluid" id="main-container">
+    <div class="row full-height" >
+        <div class="col-md-4">
+            <center>
+                <img src="img/logo.png" id="logo-image" alt="">
+            </center>
+            <form onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" placeholder="Enter email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+                </div>
+                <div class="form-group">
+                    <p id="formStatus"></p>
+                </div>
+                <center>
+                    <button type="submit" class="btn btn-primary" >Log In</button> 
+                </center>
+                <div class="form-group">
+                    <p><a href="../signUp/signup.html">Don't have an account ? start here</a></p>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8 order-first order-md-last" id="background-container">
+            <div style="margin-top: 15%; width: 100%; color: white;">
+                <center>
+                    <h1>Your adventure starts here</h1>
+                    <h1>Ready ?</h1>
+                </center>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>

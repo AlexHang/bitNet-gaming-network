@@ -55,7 +55,7 @@ public class userController {
 
         String email = (String) payload.get("email");
         String password = (String) payload.get("password");
-        String name = (String) payload.get("password");
+        String name = (String) payload.get("name");
         User u = new User();
         u.setEmail(email);
         u.setPassword(password);

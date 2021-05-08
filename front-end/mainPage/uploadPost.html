@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap 4 Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        html,body, #mainContainer{
+            height: 100%;
+        }
+
+        .fullHeight{
+            height: 100%;
+        }    
+
+    </style>
+
+</head>
+<body>
+
+<div class="container-fluid" id="mainContainer">
+    <div class="row fullHeight">
+        <div class="col-md-3 fullHeight" style="background-color: darkgray;">
+
+        </div>
+        <div class="col-md-6 fullHeight">
+            <div id="mainPageScroll" class="fullHeight" style="overflow-y: scroll;">
+                
+
+            </div>
+        </div>
+        <div class="col-md-3 fullHeight">
+
+        </div> 
+    </div>
+  
+</div>
+
+<script>
+
+
+    function buildCard(title,description,mediaURL){
+        return '<div class="card" style="width:80%; margin-top:30px;">'+
+                    '<div class="card-body">'+
+                      '<h4 class="card-title">'+title+'</h4>'+
+                      '<p class="card-text">'+description+'</p>'+
+                    '</div>'+
+                    '<img class="card-img-bottom" src="'+mediaURL+'" alt="Card image" style="width:100%">'+
+                  '</div>';
+    }
+
+
+
+    var getAllPostsettings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://localhost:8080/post/all",
+        "method": "GET",
+        "headers": {
+            "cache-control": "no-cache",
+            "postman-token": "851de458-a1ae-7648-67e0-be0b844b426f"
+        }
+        }
+
+    $.ajax(getAllPostsettings).done(function (response) {
+        console.log(response);
+        for(let i=response.length-1; i >= 0; i--){
+            document.getElementById('mainPageScroll').innerHTML+=buildCard(response[i]["title"],response[i]["description"],response[i]["mediaURL"])
+        }
+    });
+
+
+</script>
+
+</body>
+</html>
+
+<!--
+
+    <form method="POST" enctype="multipart/form-data" id="fileUploadForm" action="http://localhost:8080/post/upload">
+            <input type="text" name="title"/><br/>
+            <input type="text" name="description"/><br/><br/>
+            <input type="text" name="mediaURL"/><br/><br/>
+            <input type="number" name="authorId"><br/>
+            <input type="submit" value="Submit" id="btnSubmit"/>
+            
+        </form>
+
+-->

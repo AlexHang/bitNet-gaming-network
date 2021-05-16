@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap 4 Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        html,body, #mainContainer{
+            height: 100%;
+        }
+
+        .fullHeight{
+            height: 100%;
+        }    
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container-fluid" id="mainContainer">
+    <div class="row fullHeight">
+        <div class="col-md-3 fullHeight" style="background-color: darkgray;">
+            <center>
+                <img src="https://www.w3schools.com/bootstrap4/img_avatar3.png" style="width: 80%;border-radius:100%;">
+                <br>
+                <h1>User Name</h1>
+            </center>
+        </div>
+        <div class="col-md-6 fullHeight">
+           
+                <!-- Trigger the modal with a button -->
+                <div style="height: 10%;"> 
+                    <center>
+                        <button type="button" class="btn btn-info btn-lg" style="margin-top: 25px;" data-toggle="modal" data-target="#myModal">
+                            Create a new post
+                        </button>
+                    </center>
+                </div>
+                
+          
+            <div id="mainPageScroll" style="overflow-y: scroll; height: 90%;">
+                
+
+            </div>
+        </div>
+        <div class="col-md-3 fullHeight">
+                <h3>Friends List</h3>
+                <div style="overflow-y: scroll; height: 40%;">
+
+
+                    <div class="row friend-chat-list-item" style="margin-top: 25px; background-color:#dbdbe0;">
+                        <div class="col-sm-3">
+                           <img src="https://simplyilm.com/wp-content/uploads/2017/08/temporary-profile-placeholder-1.jpg" style="width: 50px; border-radius:100%;">
+                        </div>
+                        <div class="col-sm-6" style="display: table-cell; height: 50px; vertical-align: middle;">
+                            <p style="margin-top: 10px;"><b>Hang Alexandru</b></p>
+                        </div>
+                        <div class="col-sm-3" style="display: table-cell; height: 50px; vertical-align: middle;">
+                            <p style="margin-top: 10px; color:green;"><b>Active</b></p>
+                        </div>
+                    </div>
+
+                    <div class="row friend-chat-list-item" style="margin-top: 25px; background-color:#dbdbe0;">
+                        <div class="col-sm-3">
+                           <img src="https://simplyilm.com/wp-content/uploads/2017/08/temporary-profile-placeholder-1.jpg" style="width: 50px; border-radius:100%;">
+                        </div>
+                        <div class="col-sm-6" style="display: table-cell; height: 50px; vertical-align: middle;">
+                            <p style="margin-top: 10px;"><b>Cezar Biculescu</b></p>
+                        </div>
+                        <div class="col-sm-3" style="display: table-cell; height: 50px; vertical-align: middle;">
+                            <p style="margin-top: 10px; color:green;"><b>Active</b></p>
+                        </div>
+                    </div>
+
+                    <div class="row friend-chat-list-item" style="margin-top: 25px; background-color:#dbdbe0;">
+                        <div class="col-sm-3">
+                           <img src="https://simplyilm.com/wp-content/uploads/2017/08/temporary-profile-placeholder-1.jpg" style="width: 50px; border-radius:100%;">
+                        </div>
+                        <div class="col-sm-6" style="display: table-cell; height: 50px; vertical-align: middle;">
+                            <p style="margin-top: 10px;"><b>Claudia Duta</b></p>
+                        </div>
+                        <div class="col-sm-3" style="display: table-cell; height: 50px; vertical-align: middle;">
+                            <p style="margin-top: 10px; color:red;"><b>2 h ago</b></p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <h3>Direct Mesage</h3>
+                <div style="overflow-y: scroll; height: 40%;" id="messageContainer"> 
+                    <div style="float: right; width: 70%; margin-top: 10px; padding: 10px; background-color: #1B0A3F; color:white;">
+                        Hello
+                    </div>
+                    <div style="float: right; width: 70%; margin-top: 10px; padding: 10px; background-color: #1B0A3F; color:white;">
+                        How are you ?
+                    </div>
+                    <div style="float: left; width: 70%; margin-top: 10px; padding: 10px; background-color: #dbdbe0; color:#1B0A3F;">
+                        Hey
+                    </div>
+                    <div style="float: left; width: 70%; margin-top: 10px; padding: 10px; background-color: #dbdbe0; color:#1B0A3F;">
+                        I am fine, how about you
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group col-sm-9">
+                        <input type="email" class="form-control" id="messageInput" placeholder="Type a message" name="email">
+                        <button  class="btn btn-success col-sm-3" onclick="sendMessage()">Send</button>
+                      </div>
+                </div>
+        </div> 
+    </div>
+  
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Post</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="title">Post title</label>
+                <input type="text" class="form-control" id="title"/><br/>
+            </div>
+            <div class="form-group">
+                <label for="description">Post Description</label>
+                <input type="text" class="form-control" id="description"/><br/>
+            </div>
+            <div class="form-group">
+                <label for="mediaURL">Media</label>
+                <input type="text" class="form-control" id="mediaURL"/><br/>
+            </div>
+            
+            <center>
+                <button class="btn btn-success" onclick="submitPost()">Submit Post</button>
+            </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+<script>
+
+
+    function buildCard(title,description,mediaURL){
+        return '<div class="card" style="width:100%; margin-top:30px;">'+
+                    '<div class="card-body">'+
+                      '<h4 class="card-title">'+title+'</h4>'+
+                      '<p class="card-text">'+description+'</p>'+
+                    '</div>'+
+                    '<img class="card-img-bottom" src="'+mediaURL+'" alt="Card image" style="width:100%">'+
+                  '</div>';
+    }
+
+
+
+    var getAllPostsettings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://localhost:8080/post/all",
+        "method": "GET",
+        "headers": {
+            "cache-control": "no-cache",
+            "postman-token": "851de458-a1ae-7648-67e0-be0b844b426f"
+        }
+        }
+
+    $.ajax(getAllPostsettings).done(function (response) {
+        console.log(response);
+        for(let i=response.length-1; i >= 0; i--){
+            document.getElementById('mainPageScroll').innerHTML+=buildCard(response[i]["title"],response[i]["description"],response[i]["mediaURL"])
+        }
+    });
+
+    function refresh(){
+        $.ajax(getAllPostsettings).done(function (response) {
+        console.log(response);
+        document.getElementById('mainPageScroll').innerHTML="";
+        for(let i=response.length-1; i >= 0; i--){
+            document.getElementById('mainPageScroll').innerHTML += buildCard(response[i]["title"],response[i]["description"],response[i]["mediaURL"])
+        }
+    });
+    }
+    
+    console.log(localStorage.getItem('userId'));
+
+    function submitPost(){
+
+        var dataToSubmit ={
+            "title":document.getElementById("title").value,
+                "description":document.getElementById("description").value,
+                "authorId" : localStorage.getItem('userId'),
+                "mediaURL" : document.getElementById("mediaURL").value,
+        }
+
+        var uploadPostSettings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://localhost:8080/post/upload",
+            "method": "POST",
+            "headers": {
+            "content-type": "application/json",
+            "cache-control": "no-cache",
+            },
+            "processData": false,
+            "data":  JSON.stringify(dataToSubmit),
+        }
+        console.log(dataToSubmit);
+        $.ajax(uploadPostSettings).done(function (response) {
+            console.log(response);
+            refresh();
+        });
+    }
+
+    function updateChatHistory(){
+
+
+        $.ajax({
+        "async": true,
+        "crossDomain": true,
+        "url": "http://localhost:8080/conversation/1/2",
+        "method": "GET",
+        "headers": {
+            "cache-control": "no-cache",
+        }
+        }).done(function (response) {
+            
+            console.log(response);
+            document.getElementById("messageContainer").innerHTML="";
+            for(let i=0; i<response.length;i++){
+                if(response[i]["sender"] == "1"){
+                    document.getElementById("messageContainer").innerHTML+='<div style="float: right; width: 70%; margin-top: 10px; padding: 10px; background-color: #1B0A3F; color:white;">'+response[i]["content"]+'</div>'
+
+                }else{
+                    document.getElementById("messageContainer").innerHTML += '<div style="float: left; width: 70%; margin-top: 10px; padding: 10px; background-color: #dbdbe0; color:#1B0A3F;">'+response[i]["content"]+'</div>';
+                }
+            }
+
+            document.getElementById("messageContainer").scrollTop = document.getElementById("messageContainer").scrollHeight;
+
+        });
+
+    }
+    
+    updateChatHistory();
+
+    function sendMessage(){
+        var msg = document.getElementById("messageInput").value;
+
+        var dataToSend = {
+            "sender":"1",
+            "receiver":"2",
+            "message":msg
+        }
+
+        if(msg.length>1){
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                "url": "http://localhost:8080/message/send",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache",
+                    "postman-token": "dd54d529-f347-2f52-6462-22d87433ca34"
+                },
+                "processData": false,
+                "data": JSON.stringify(dataToSend),
+            }).done(function (response) {
+                console.log(response);
+                updateChatHistory();
+            });
+        }
+        
+    }
+
+    setInterval(function(){
+        updateChatHistory();
+    },10000);
+
+
+</script>
+
+</body>
+</html>
+
+<!--
+
+    <form method="POST" enctype="multipart/form-data" id="fileUploadForm" action="http://localhost:8080/post/upload">
+            <input type="text" name="title"/><br/>
+            <input type="text" name="description"/><br/><br/>
+            <input type="text" name="mediaURL"/><br/><br/>
+            <input type="number" name="authorId"><br/>
+            <input type="submit" value="Submit" id="btnSubmit"/>
+            
+        </form>
+
+-->

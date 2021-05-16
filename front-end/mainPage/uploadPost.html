@@ -29,7 +29,11 @@
 
         </div>
         <div class="col-md-6 fullHeight">
-            <div id="mainPageScroll" class="fullHeight" style="overflow-y: scroll;">
+            <center>
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+            </center>
+            <div id="mainPageScroll" style="overflow-y: scroll; height: 90%;">
                 
 
             </div>
@@ -40,6 +44,42 @@
     </div>
   
 </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Post</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="title">Post title</label>
+                <input type="text" class="form-control" id="title"/><br/>
+            </div>
+            <div class="form-group">
+                <label for="description">Post Description</label>
+                <input type="text" class="form-control" name="description"/><br/>
+            </div>
+            <div class="form-group">
+                <label for="mediaURL">Media</label>
+                <input type="text" class="form-control" id="mediaURL"/><br/>
+            </div>
+            
+            <center>
+                <button class="btn btn-success" onclick="submitPost()">Submit Post</button>
+            </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
 
 <script>
 
@@ -73,6 +113,34 @@
             document.getElementById('mainPageScroll').innerHTML+=buildCard(response[i]["title"],response[i]["description"],response[i]["mediaURL"])
         }
     });
+
+
+    
+
+    function submitPost(){
+        var uploadPostSettings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://localhost:8080/post/upload",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache",
+                "postman-token": "b5ac9fe8-a377-b6fd-33b1-eaa497051c21"
+            },
+            "processData": false,
+            "data": {
+                "title":document.getElementById("title"),
+                "description":document.getElementById("description"),
+                "authorId" : "1",
+                "mediaURL" : document.getElementById("mediaURL"),
+            }
+        }
+        $.ajax(uploadPostSettings).done(function (response) {
+            console.log(response);
+        });
+    }
+
 
 
 </script>

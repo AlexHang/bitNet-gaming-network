@@ -28,6 +28,7 @@ function validateForm(){
                 localStorage.setItem('userId', response["userID"]);
                 document.getElementById("formStatus").style.color = "green"
                 document.getElementById("formStatus").innerHTML = "success";
+                window.location.href="../mainPage/index.html"
             }else{
                 document.getElementById("formStatus").style.color = "red"
                 document.getElementById("formStatus").innerHTML = "Wrong username or password";

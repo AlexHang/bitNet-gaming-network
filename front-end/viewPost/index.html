@@ -38,20 +38,41 @@
         </div>
         <div class="col-md-6 fullHeight">
            
-                <!-- Trigger the modal with a button -->
-                <div style="height: 10%;"> 
-                    <center>
-                        <button type="button" class="btn btn-info btn-lg" style="margin-top: 25px;" data-toggle="modal" data-target="#myModal">
-                            Create a new post
-                        </button>
-                    </center>
-                </div>
-                
-          
-            <div id="mainPageScroll" style="overflow-y: scroll; height: 90%;">
+          <div style="height: 100vh; overflow-y: scroll;">
+            <div id="mainPageScroll">
                 
 
             </div>
+            
+            <div>
+
+
+                <div class="row" style="padding-top: 25px;">
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <label for="description">Write a comment</label>
+                            <input type="text" class="form-control" id="commentToSend"/><br/>
+                        </div>
+                        
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <button class="btn btn-success" style="margin-top:30px;" onclick="submitPost()">Post Comment</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div id="commentSectionScroll">
+                    
+                </div>
+
+            </div>
+          </div>
+            
+
+
+
         </div>
         <div class="col-md-3 fullHeight">
                 <h3>Friends List</h3>
@@ -82,8 +103,6 @@
                         </div>
                     </div>
 
-
-
                 </div>
                 <h3>Direct Mesage</h3>
                 <div style="overflow-y: scroll; height: 40%;" id="messageContainer"> 
@@ -111,85 +130,86 @@
   
 </div>
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-  
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create Post</h4>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="title">Post title</label>
-                <input type="text" class="form-control" id="title"/><br/>
-            </div>
-            <div class="form-group">
-                <label for="description">Post Description</label>
-                <input type="text" class="form-control" id="description"/><br/>
-            </div>
-            <div class="form-group">
-                <label for="mediaURL">Media</label>
-                <input type="text" class="form-control" id="mediaURL"/><br/>
-            </div>
-            
-            <center>
-                <button class="btn btn-success" onclick="submitPost()">Submit Post</button>
-            </center>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-  
-    </div>
-  </div>
+
 
 <script>
 
 
-    function buildCard(id,title,description,mediaURL){
+    let urlParams = new URLSearchParams(window.location.search);
+	let postId = urlParams.get('postId');
+    console.log(postId);
+
+    function buildCard(title,description,mediaURL){
         return '<div class="card" style="width:100%; margin-top:30px;">'+
-                    '<a target="_blank" href="../viewPost/index.html?postId='+id+'">'+
-                        '<div class="card-body">'+
-                        '<h4 class="card-title">'+title+'</h4>'+
-                        '<p class="card-text">'+description+'</p>'+
-                        '</div>'+
-                        '<img class="card-img-bottom" src="'+mediaURL+'" alt="Card image" style="width:100%">'+
-                    '</a>'+
+                    '<div class="card-body">'+
+                      '<h4 class="card-title">'+title+'</h4>'+
+                      '<p class="card-text">'+description+'</p>'+
+                    '</div>'+
+                    '<img class="card-img-bottom" src="'+mediaURL+'" alt="Card image" style="width:100%">'+
                   '</div>';
+    }
+
+    function buildCommentCard(comment){
+        console.log(comment);
+        return '<div class="row" style="background-color: lightgrey; padding: 10px; margin-top:15px;">'+
+                        '<div class="col-sm-1"><img src="https://www.w3schools.com/bootstrap4/img_avatar3.png" style="width: 80%;border-radius:100%;"></div>'+
+                        '<div class="col-sm-11"><p>' + comment + '</p></div>'+
+                    '</div>';
     }
 
 
 
-    var getAllPostsettings = {
+
+
+    $.ajax({
         "async": true,
         "crossDomain": true,
-        "url": "http://localhost:8080/post/all",
+        "url": "http://localhost:8080/post/getPost/"+postId,
         "method": "GET",
         "headers": {
             "cache-control": "no-cache",
-            "postman-token": "851de458-a1ae-7648-67e0-be0b844b426f"
+            "postman-token": "6c8dd521-62ee-3f12-1a58-4b9cb986d6da"
         }
-        }
-
-    $.ajax(getAllPostsettings).done(function (response) {
+    }).done(function (response) {
+        document.getElementById('mainPageScroll').innerHTML+=buildCard(response["title"],response["description"],response["mediaURL"])
         console.log(response);
-        for(let i=response.length-1; i >= 0; i--){
-            document.getElementById('mainPageScroll').innerHTML+=buildCard(response[i]["id"],response[i]["title"],response[i]["description"],response[i]["mediaURL"])
-        }
     });
+
+    $.ajax({
+        "async": true,
+        "crossDomain": true,
+        "url": "http://localhost:8080/comments/"+postId,
+        "method": "GET",
+        "headers": {
+            "cache-control": "no-cache",
+            "postman-token": "6c8dd521-62ee-3f12-1a58-4b9cb986d6da"
+        }
+    }).done(function (response) {
+        for(let i=response.length-1; i >= 0; i--){
+            document.getElementById('commentSectionScroll').innerHTML += buildCommentCard(response[i]["content"]);
+        }
+        console.log(response);
+    });
+
+
 
     function refresh(){
-        $.ajax(getAllPostsettings).done(function (response) {
-        console.log(response);
-        document.getElementById('mainPageScroll').innerHTML="";
-        for(let i=response.length-1; i >= 0; i--){
-            document.getElementById('mainPageScroll').innerHTML += buildCard(response[i]["id"],response[i]["title"],response[i]["description"],response[i]["mediaURL"])
-        }
-    });
+        $.ajax({
+            "async": true,
+            "crossDomain": true,
+            "url": "http://localhost:8080/comments/"+postId,
+            "method": "GET",
+            "headers": {
+                "cache-control": "no-cache",
+                "postman-token": "6c8dd521-62ee-3f12-1a58-4b9cb986d6da"
+            }
+        }).done(function (response) {
+            document.getElementById('commentSectionScroll').innerHTML = "";
+            for(let i=response.length-1; i >= 0; i--){
+                document.getElementById('commentSectionScroll').innerHTML += buildCommentCard(response[i]["content"]);
+            }
+            console.log(response);
+        });
     }
     
     console.log(localStorage.getItem('userId'));
@@ -197,16 +217,15 @@
     function submitPost(){
 
         var dataToSubmit ={
-            "title":document.getElementById("title").value,
-                "description":document.getElementById("description").value,
-                "authorId" : localStorage.getItem('userId'),
-                "mediaURL" : document.getElementById("mediaURL").value,
+            "postId":postId,
+            "userId":"1",
+            "content":document.getElementById("commentToSend").value,
         }
 
         var uploadPostSettings = {
             "async": true,
             "crossDomain": true,
-            "url": "http://localhost:8080/post/upload",
+            "url": "http://localhost:8080/comments/add",
             "method": "POST",
             "headers": {
             "content-type": "application/json",
@@ -219,6 +238,7 @@
         $.ajax(uploadPostSettings).done(function (response) {
             console.log(response);
             refresh();
+            document.getElementById("commentToSend").value="";
         });
     }
 
@@ -294,15 +314,3 @@
 </body>
 </html>
 
-<!--
-
-    <form method="POST" enctype="multipart/form-data" id="fileUploadForm" action="http://localhost:8080/post/upload">
-            <input type="text" name="title"/><br/>
-            <input type="text" name="description"/><br/><br/>
-            <input type="text" name="mediaURL"/><br/><br/>
-            <input type="number" name="authorId"><br/>
-            <input type="submit" value="Submit" id="btnSubmit"/>
-            
-        </form>
-
--->

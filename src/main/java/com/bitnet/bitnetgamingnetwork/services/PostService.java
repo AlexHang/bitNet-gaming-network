@@ -31,6 +31,8 @@ public class PostService {
         return  postRepo.findAll();
     }
 
+    public Post getPostById(Integer postId){return  postRepo.findPostById(postId);}
+
     public String saveUploadedFile(MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             byte[] bytes = file.getBytes();
